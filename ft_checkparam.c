@@ -87,6 +87,8 @@ static void     ft_write_length(t_plist *rules, const char *c, int *i)
         rules->length |= 16;
     else if (*c == 'z')
         rules->length |= 32;
+    else if (*c == 't')
+        rules->length |= 64;
 }
 
 int             ft_checkparam(const char *format, va_list ap, int *i)
@@ -108,13 +110,6 @@ int             ft_checkparam(const char *format, va_list ap, int *i)
 	if (!format[*i]) // нужно уточнить этот кейс
 		return (0);
     ft_use_rules(rules, format[*i], ap);
-/*--------------------------------------------
-	printf("R->flags = %d\n", rules->flags);
-	printf("R->width = %d\n", rules->width);
-	printf("R->precision = %d\n", rules->precision);
-    printf("R->length = %d\n", rules->length);
---------------------------------------------*/
-
     (*i)++; // <-- нада куда-то это дело перенести помоднее
     return (1);
 }
