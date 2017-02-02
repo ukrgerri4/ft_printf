@@ -1,97 +1,17 @@
 #include "ft_printf.h"
 
-static int      ft_end_char(char c)
+static void	ft_use_rules(t_plist *rules, char c, va_list ap)
 {
-    char    mass[20] = "cCsSdDioOuUxXp";
-    int     i;
-
-    i = 0;
-    while (c != mass[i] && mass[i])
-        i++;
-    if (mass[i])
-        return (1);
-    return (0);
+    if (c == 'c' || c == 'C' || c == 's' || c == 'S')
+        ft_use_rules_cCsS(rules, c, ap);
+    else if (c == 'd' || c == 'D' || c == 'i' || c == 'o'
+        || c == 'O' || c == 'u' || c == 'U' || c == 'x' || c == 'X' || c == 'p')
+        ft_use_rules_dDioOuUxX(rules, c, ap);
+/*    else if (c == 'p')
+        ft_use_rules_p(rules, ap);*/
 }
 
-static void     ft_write_pad(t_plist *rules, const char *c, int *i)
-{
-    int res;
-
-	if (*c >= '1' && *c <= '9')
-	{
-		if ((res = ft_atoi(c)) > rules->width) // mb it's not accord with norm
-			rules->width = res;
-		while (*c >= '0' && *c <= '9')
-		{
-			c++;
-			(*i)++;
-		}
-        (*i)--;
-	}
-	else
-	{
-		if ((res = ft_atoi(++c)) > rules->precision) // mb it's not accord with norm
-		{
-			rules->precision = res; 
-			while (*c >= '0' && *c <= '9')
-			{
-				c++;
-				(*i)++;
-			}
-		}
-	}
-}
-
-static void     ft_write_flags(t_plist *rules, char c)
-{
-	if (c == '+')
-		rules->flags |= 1;
-	else if (c == '-')
-		rules->flags |= 2;
-	else if (c == ' ')
-		rules->flags |= 4;
-	else if (c == '#')
-		rules->flags |= 8;
-	else if (c == '0')
-		rules->flags |= 16;
-}
-
-static void     ft_create_plist(t_plist **rules)
-{
-	*rules = (t_plist*)malloc(sizeof(t_plist));
-	(*rules)->flags = 0;
-	(*rules)->width = 0;
-	(*rules)->precision = 0;
-    (*rules)->length = 0;
-}
-
-static void     ft_write_length(t_plist *rules, const char *c, int *i)
-{
-    if (*c == 'h')
-        if (*(c + 1) == 'h')
-        {
-            rules->length |= 1;
-            (*i)++;
-        }
-        else
-            rules->length |= 2;
-    else if (*c == 'l')
-        if (*(c + 1) == 'l')
-        {
-            rules->length |= 8;
-            (*i)++;
-        }
-        else
-            rules->length |= 4;
-    else if (*c == 'j')
-        rules->length |= 16;
-    else if (*c == 'z')
-        rules->length |= 32;
-    else if (*c == 't')
-        rules->length |= 64;
-}
-
-int             ft_checkparam(const char *format, va_list ap, int *i)
+int		ft_checkparam(const char *format, va_list ap, int *i)
 {
 	t_plist	*rules;
 

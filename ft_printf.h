@@ -35,23 +35,33 @@ typedef struct	s_plist
 	int     width;
 	int     precision;
     int     length;
+    char    prefix[3];
+    char    prep;
+    int     len;
+
 }				t_plist;
 
 int     ft_printf(const char *format, ...);
-int     ft_checkparam(const char *format, va_list ap, int *i);
-
+/*
+ * check all parameters 
+ */
+int 	ft_checkparam(const char *format, va_list ap, int *i);
+int      ft_end_char(char c);
+void     ft_write_pad(t_plist *rules, const char *c, int *i);
+void     ft_write_flags(t_plist *rules, char c);
+void     ft_create_plist(t_plist **rules);
+void     ft_write_length(t_plist *rules, const char *c, int *i);
 /*
  * use saved parameters and write specifier
  */
-
-void    ft_use_rules(t_plist *rules, char c, va_list ap);
 void    ft_use_rules_cCsS(t_plist *rules, char c, va_list ap);
-void	ft_use_rules_dDioOuUxX(t_plist *rules, char c, va_list ap);
 
+ssize_t	ft_signT(t_plist *rules, va_list ap);
+size_t 	ft_unsignT(t_plist *rules, va_list ap);
+void	ft_use_rules_dDioOuUxX(t_plist *rules, char c, va_list ap);
 /*
  * write function
  */
-
 void    ft_putchar_count(char c);
 void    ft_putstr_count(char *s);
 char    *ft_itoa_base_s(ssize_t value, int base);

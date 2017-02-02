@@ -14,7 +14,7 @@ int     ft_printf(const char *format, ...)
 			if (!ft_checkparam(format, ap, &i))
 				return (0);
 		if (format[i])
-			ft_putchar_count(format[i++]); // возможно нада сначала писать в строку!
+			ft_putchar_count(format[i++]);
 	}
 	va_end(ap);
     return (g_count);

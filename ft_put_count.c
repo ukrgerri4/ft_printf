@@ -20,9 +20,8 @@ char    *ft_itoa_base_s(ssize_t value, int base)
 	int			i;
 	ssize_t     n;
 	char		*s;
-	char		*hex;
+	static char		hex[17] = "0123456789ABCDEF";
 
-	hex = "0123456789ABCDEF";
 	i = (value < 0 && base == 10) ? 2 : 1;
 	n = value;
 	while (n /= base)
@@ -45,12 +44,11 @@ char    *ft_itoa_base_s(ssize_t value, int base)
 
 char    *ft_itoa_base_us(size_t value, int base)
 {
-	int			i;
-	size_t     n;
-	char		*s;
-	char		*hex;
+	int				i;
+	ssize_t 		n;
+	char			*s;
+	static char		hex[17] = "0123456789ABCDEF";
 
-	hex = "0123456789ABCDEF";
 	i = 1;
 	n = value;
 	while (n /= base)
