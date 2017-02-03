@@ -2,17 +2,17 @@
 
 void    ft_putchar_count(char c)
 {
-    write(1, &c, 1);
-    g_count++;
+	write(1, &c, 1);
+	g_count++;
 }
 
 void    ft_putstr_count(char *s)                                                                               
 {
-    if (s)
-    {
-        while (*s)
-            ft_putchar_count(*(s++));
-    }
+	if (s)
+	{
+		while (*s)
+			ft_putchar_count(*(s++));
+	}
 }
 
 char    *ft_itoa_base_s(ssize_t value, int base)
@@ -45,7 +45,7 @@ char    *ft_itoa_base_s(ssize_t value, int base)
 char    *ft_itoa_base_us(size_t value, int base)
 {
 	int				i;
-	ssize_t 		n;
+	size_t 			n;
 	char			*s;
 	static char		hex[17] = "0123456789ABCDEF";
 
@@ -65,4 +65,22 @@ char    *ft_itoa_base_us(size_t value, int base)
 		n /= base;
 	}
 	return (s);
+}
+
+char    *ft_tolower_str(char *s)
+{
+	int i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			if (s[i] >= 'A' && s[i] <= 'Z')
+				s[i] = s[i] + 32;
+			i++;
+		}
+		return (s);
+	}
+	return (NULL);
 }

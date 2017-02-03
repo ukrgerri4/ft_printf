@@ -1,6 +1,9 @@
 #!/bin/bash
 
 clear
-gcc *.c -L. libft/libft.a
+make fclean
+make
+make clean
+gcc main.c libftprintf.a
 ./a.out | cat -e
 rm a.out

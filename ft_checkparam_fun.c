@@ -2,43 +2,42 @@
 
 int      ft_end_char(char c)
 {
-    char    mass[20] = "cCsSdDioOuUxXp";
-    int     i;
+	static char    mass[16] = "cCsSdDioOuUxXp%";
+	int     i;
 
-    i = 0;
-    while (c != mass[i] && mass[i])
-        i++;
-    if (mass[i])
-        return (1);
-    return (0);
+	i = 0;
+	while (c != mass[i] && mass[i])
+		i++;
+	if (mass[i])
+		return (1);
+	return (0);
 }
 
-void     ft_write_pad(t_plist *rules, const char *c, int *i)
+void     ft_write_pad(t_plist *rules, const char *format, int *i)
 {
-    int res;
+	int res;
 
-	if (*c >= '1' && *c <= '9')
+	if (format[*i] >= '1' && format[*i] <= '9')
 	{
-		if ((res = ft_atoi(c)) > rules->width) // mb it's not accord with norm
+		if ((res = ft_atoi(&format[*i])) > rules->width) // mb it's not accord with norm
 			rules->width = res;
-		while (*c >= '0' && *c <= '9')
-		{
-			c++;
+		while (format[*i] >= '0' && format[*i] <= '9')
 			(*i)++;
-		}
-        (*i)--;
 	}
 	else
 	{
-		if ((res = ft_atoi(++c)) > rules->precision) // mb it's not accord with norm
+		(*i)++;
+		if (format[*i] >= '1' && format[*i] <= '9')
 		{
-			rules->precision = res; 
-			while (*c >= '0' && *c <= '9')
+			if ((res = ft_atoi(&format[*i])) > rules->precision) // mb it's not accord with norm
 			{
-				c++;
-				(*i)++;
+				rules->precision = res; 
+				while (format[*i] >= '0' && format[*i] <= '9')
+					(*i)++;
 			}
 		}
+		else
+			rules->precision = 0;
 	}
 }
 
@@ -58,38 +57,37 @@ void     ft_write_flags(t_plist *rules, char c)
 
 void     ft_create_plist(t_plist **rules)
 {
-	*rules = (t_plist*)malloc(sizeof(t_plist));
+	if (!*rules)
+		*rules = (t_plist*)malloc(sizeof(t_plist));
 	(*rules)->flags = 0;
 	(*rules)->width = 0;
-	(*rules)->precision = 0;
-    (*rules)->length = 0;
-    (*rules)->len = 0;
-    ft_bzero((*rules)->prefix, 3);
-    (*rules)->prep = ' ';
+	(*rules)->precision = -1;
+	(*rules)->length = 0;
+	(*rules)->len = 0;
+	ft_bzero((*rules)->prefix, 3);
+	(*rules)->prep = ' ';
 }
 
 void     ft_write_length(t_plist *rules, const char *c, int *i)
 {
-    if (*c == 'h')
-        if (*(c + 1) == 'h')
-        {
-            rules->length |= 1;
-            (*i)++;
-        }
-        else
-            rules->length |= 2;
-    else if (*c == 'l')
-        if (*(c + 1) == 'l')
-        {
-            rules->length |= 8;
-            (*i)++;
-        }
-        else
-            rules->length |= 4;
-    else if (*c == 'j')
-        rules->length |= 16;
-    else if (*c == 'z')
-        rules->length |= 32;
-    else if (*c == 't')
-        rules->length |= 64;
+	if (*c == 'h')
+		if (*(c + 1) == 'h')
+		{
+			rules->length |= 1;
+			(*i)++;
+		}
+		else
+			rules->length |= 2;
+	else if (*c == 'l')
+		if (*(c + 1) == 'l')
+		{
+			rules->length |= 8;
+			(*i)++;
+		}
+		else
+			rules->length |= 4;
+	else if (*c == 'j')
+		rules->length |= 16;
+	else if (*c == 'z')
+		rules->length |= 32;
 }

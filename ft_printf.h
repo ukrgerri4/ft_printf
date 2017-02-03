@@ -10,8 +10,7 @@
 # define LENGTH format[*i] == 'h'\
 || format[*i] == 'l'\
 || format[*i] == 'j'\
-|| format[*i] == 'z'\
-|| format[*i] == 't'
+|| format[*i] == 'z'
 
 # define UNSIGNED_SPE c == 'o'\
 || c == 'O'\
@@ -20,9 +19,11 @@
 || c == 'x'\
 || c == 'X'
 
-# include "libft/libft.h"
-# include <stdio.h>
+# include <stdio.h> // delete
 # include <stdarg.h>
+# include <string.h>  //?
+# include <stdlib.h>
+# include <unistd.h>
 # include <wchar.h>
 # include <stddef.h>
 # include <inttypes.h>
@@ -34,10 +35,10 @@ typedef struct	s_plist
 	int     flags;
 	int     width;
 	int     precision;
-    int     length;
-    char    prefix[3];
-    char    prep;
-    int     len;
+	int     length;
+	char    prefix[3];
+	char    prep;
+	int     len;
 
 }				t_plist;
 
@@ -45,7 +46,7 @@ int     ft_printf(const char *format, ...);
 /*
  * check all parameters 
  */
-int 	ft_checkparam(const char *format, va_list ap, int *i);
+int 	ft_checkparam(t_plist *rules, const char *format, va_list ap, int *i);
 int      ft_end_char(char c);
 void     ft_write_pad(t_plist *rules, const char *c, int *i);
 void     ft_write_flags(t_plist *rules, char c);
@@ -66,5 +67,12 @@ void    ft_putchar_count(char c);
 void    ft_putstr_count(char *s);
 char    *ft_itoa_base_s(ssize_t value, int base);
 char	*ft_itoa_base_us(size_t value, int base);
-
+char    *ft_tolower_str(char *s);
+/*
+ * libft function
+ */
+int     ft_atoi(const char *str);
+void    ft_bzero(void *str, size_t n);
+size_t	ft_strlen(const char *str);
+void    ft_strdel(char **as);
 #endif
