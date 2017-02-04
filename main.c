@@ -2,11 +2,17 @@
 
 int     main(void)
 {
-	ft_printf("%lc, %lc\n", L'ÊM-^ZM-^V', L'ÿ≠');
-	printf("PR%lc, %lc\n", L'ÊM-^ZM-^V', L'ÿ≠');
+	int *s;
 
-	ft_printf("{%030S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
-	printf("PR{%030S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	s = 0;
+	ft_printf("%p %p\n", s, NULL);
+	printf("%p %p\n", s, NULL);
+
+	ft_printf("%D\n", -2147483647);
+	printf("%D\n", -2147483647);
+	ft_printf("%D\n", 4294959296);
+	printf("%D\n", 4294959296);
+
 /*
 	ft_printf("%jx", -4294967296);
 printf("%jx", -4294967296);
