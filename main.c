@@ -2,8 +2,17 @@
 
 int     main(void)
 {
-	ft_printf("%#O\n", 0);
-	printf("%#O\n", 0);
+	int *s;
+
+	s = 0;
+	ft_printf("%p %p\n", s, NULL);
+	printf("%p %p\n", s, NULL);
+
+	ft_printf("%D\n", -2147483647);
+	printf("%D\n", -2147483647);
+	ft_printf("%D\n", 4294959296);
+	printf("%D\n", 4294959296);
+
 /*
 	ft_printf("%jx", -4294967296);
 printf("%jx", -4294967296);
