@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_put_count.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/04 19:42:44 by ikryvenk          #+#    #+#             */
+/*   Updated: 2017/02/04 19:43:36 by ikryvenk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-void    ft_putchar_count(char c)
+void	ft_putchar_count(char c)
 {
 	write(1, &c, 1);
 	g_count++;
 }
 
-void    ft_putstr_count(char *s)                                                                               
+void	ft_putstr_count(char *s)
 {
 	if (s)
 	{
@@ -15,12 +27,12 @@ void    ft_putstr_count(char *s)
 	}
 }
 
-char    *ft_itoa_base_s(ssize_t value, int base)
+char	*ft_itoa_base_s(ssize_t value, int base)
 {
 	int			i;
-	ssize_t     n;
+	ssize_t		n;
 	char		*s;
-	static char		hex[17] = "0123456789ABCDEF";
+	static char	hex[17] = "0123456789ABCDEF";
 
 	i = (value < 0 && base == 10) ? 2 : 1;
 	n = value;
@@ -42,10 +54,10 @@ char    *ft_itoa_base_s(ssize_t value, int base)
 	return (s);
 }
 
-char    *ft_itoa_base_us(size_t value, int base)
+char	*ft_itoa_base_us(size_t value, int base)
 {
 	int				i;
-	size_t 			n;
+	size_t			n;
 	char			*s;
 	static char		hex[17] = "0123456789ABCDEF";
 
@@ -67,7 +79,7 @@ char    *ft_itoa_base_us(size_t value, int base)
 	return (s);
 }
 
-char    *ft_tolower_str(char *s)
+char	*ft_tolower_str(char *s)
 {
 	int i;
 

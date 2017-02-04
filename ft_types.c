@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_types.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/02/04 19:31:19 by ikryvenk          #+#    #+#             */
+/*   Updated: 2017/02/04 19:32:00 by ikryvenk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-ssize_t ft_signT(t_plist *rules, va_list ap)
+ssize_t	ft_sign_t(t_plist *rules, va_list ap)
 {
 	ssize_t tmp;
 
@@ -20,7 +32,7 @@ ssize_t ft_signT(t_plist *rules, va_list ap)
 		return (tmp = va_arg(ap, int));
 }
 
-size_t ft_unsignT(t_plist *rules, va_list ap)
+size_t	ft_unsign_t(t_plist *rules, va_list ap)
 {
 	size_t tmp;
 
