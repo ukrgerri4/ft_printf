@@ -87,9 +87,9 @@ void        ft_use_rules_cCsS(t_plist *rules, char c, va_list ap)
     if (c == '%')
         ft_print_c(rules, '%');
     if ((c == 'c' && (rules->length &= 4)) || c == 'C')
-        ft_putchar_count(va_arg(ap, wint_t));
+        ft_putchar_count(va_arg(ap, int));
     if ((c == 's' && (rules->length &= 4)) || c == 'S')
-        ft_putstr_count(va_arg(ap, wchar_t*));
+        ft_putstr_count(va_arg(ap, char*));
     if (c == 'c')
         ft_print_c(rules, va_arg(ap, int));
     if (c == 's')

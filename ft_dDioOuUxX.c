@@ -11,7 +11,7 @@ static void ft_check_prefix(t_plist *rules, char **s, char c, int *i)
     else if ((c == 'o' || c == 'O') && (rules->flags & 8) && *s[0] != '0')
     {
         rules->prefix[0] = '0';
-        *i = 1;
+        *i = (rules->precision > rules->len ) ? 0 : 1;
     }
     else if ((c == 'x' || c == 'X') && (rules->flags & 8) && *s[0] != '0')
     {
@@ -26,6 +26,17 @@ static void ft_check_prefix(t_plist *rules, char **s, char c, int *i)
     }
     else
         rules->prefix[0] = '+';
+}
+
+static void ft_check_prefix_p(t_plist *rules, char *s, char c, int *i)
+{
+    if (c == 'p')
+    {
+        ft_tolower_str(s);
+        rules->prefix[0] = '0';
+        rules->prefix[1] = 'x';
+        *i = 2;
+    }
 }
 
 static void ft_alignment_on(t_plist *rules, char *s, char c, int i)
@@ -87,7 +98,9 @@ static void ft_print_dDioOuUxX(t_plist *rules, char *s, char c)
             rules->flags = 0;
         s[0] = '\0';
     }
+    rules->len = ft_strlen(s);
     ft_check_prefix(rules, &s, c, &i);
+    ft_check_prefix_p(rules, s, c, &i);
     i = ((rules->flags & 1) && !(UNSIGNED_SPE)) ? 1 : i;
     rules->len = ft_strlen(s);
     if (rules->flags & 2)
@@ -99,8 +112,12 @@ static void ft_print_dDioOuUxX(t_plist *rules, char *s, char c)
 
 void    ft_use_rules_dDioOuUxX(t_plist *rules, char c, va_list ap)
 {
-	if (c == 'd' || c == 'i' || c == 'D') // ask about 'D'
+	if (c == 'd' || c == 'i' || c == 'D')
+    {
+        if (c == 'D')
+            rules->length |= 4;
         ft_print_dDioOuUxX(rules, ft_itoa_base_s(ft_signT(rules, ap), 10), c);
+    }
     else if (c == 'o' || c == 'O')
     {
         if (c == 'O')
@@ -116,12 +133,7 @@ void    ft_use_rules_dDioOuUxX(t_plist *rules, char c, va_list ap)
     else if (c == 'x' || c == 'X' || c == 'p')
     {
         if (c == 'p')
-        {
-            c = 'x';
-            rules->length = 0; // ?? mb do not need 0
             rules->length |= 32;
-            rules->flags |= 8;
-        }
         ft_print_dDioOuUxX(rules, ft_itoa_base_us(ft_unsignT(rules, ap), 16), c);
     }
 }
