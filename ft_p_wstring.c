@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_p_string.c                                      :+:      :+:    :+:   */
+/*   ft_p_wstring.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/04 20:24:57 by ikryvenk          #+#    #+#             */
-/*   Updated: 2017/02/05 16:40:11 by ikryvenk         ###   ########.fr       */
+/*   Created: 2017/02/05 19:55:14 by ikryvenk          #+#    #+#             */
+/*   Updated: 2017/02/05 19:55:16 by ikryvenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_ps_align_on(t_plist *rules, char *s)
+static void	ft_write_precision(t_plist *rules, wchar_t *s)
+{
+	while (rules->precision > 0)
+	{
+		ft_putwchar_count(*(s++));
+		rules->precision = rules->precision - g_wcount;
+	}
+}
+
+static void	ft_pws_align_on(t_plist *rules, wchar_t *s)
 {
 	if (rules->precision != -1 && rules->precision < rules->len)
 		if (rules->width > rules->precision)
 		{
 			rules->len = rules->width - rules->precision;
-			while (rules->precision-- > 0)
-				ft_putchar_count(*(s++));
+			ft_write_precision(rules, s);
 			while ((rules->len)--)
 				((rules->flags & 16) && !(rules->flags & 2))
 					? ft_putchar_count('0') : ft_putchar_count(' ');
 		}
 		else
-			while (rules->precision-- > 0)
-				ft_putchar_count(*(s++));
+			ft_write_precision(rules, s);
 	else
 	{
-		ft_putstr_count(s);
+		ft_putwstr_count(s);
 		if (rules->width && rules->width > rules->len)
 		{
 			rules->len = rules->width - rules->len;
@@ -40,7 +47,7 @@ static void	ft_ps_align_on(t_plist *rules, char *s)
 	}
 }
 
-static void	ft_ps_align_off(t_plist *rules, char *s)
+static void	ft_pws_align_off(t_plist *rules, wchar_t *s)
 {
 	if (rules->precision != -1 && rules->precision < rules->len)
 		if (rules->width > rules->precision)
@@ -49,12 +56,10 @@ static void	ft_ps_align_off(t_plist *rules, char *s)
 			while ((rules->len)--)
 				((rules->flags & 16) && !(rules->flags & 2))
 					? ft_putchar_count('0') : ft_putchar_count(' ');
-			while (rules->precision-- > 0)
-				ft_putchar_count(*(s++));
+			ft_write_precision(rules, s);
 		}
 		else
-			while (rules->precision-- > 0)
-				ft_putchar_count(*(s++));
+			ft_write_precision(rules, s);
 	else
 	{
 		if (rules->width && rules->width > rules->len)
@@ -64,27 +69,31 @@ static void	ft_ps_align_off(t_plist *rules, char *s)
 				((rules->flags & 16) && !(rules->flags & 2))
 					? ft_putchar_count('0') : ft_putchar_count(' ');
 		}
-		ft_putstr_count(s);
+		ft_putwstr_count(s);
 	}
 }
 
-void		ft_print_s(t_plist *rules, char *s)
+void		ft_print_ws(t_plist *rules, wchar_t *s)
 {
 	if (!s)
+	{
 		s = "(null)";
-	rules->len = ft_strlen(s);
+		ft_print_s(rules, s);
+		return ;
+	}
+	rules->len = ft_wstrlen(s);
 	if (rules->flags & 2)
-		ft_ps_align_on(rules, s);
+		ft_pws_align_on(rules, s);
 	else
-		ft_ps_align_off(rules, s);
+		ft_pws_align_off(rules, s);
 }
 
-void		ft_print_c(t_plist *rules, char c)
+void		ft_print_wc(t_plist *rules, wint_t c)
 {
 	rules->len = 1;
 	if (rules->flags & 2)
 	{
-		ft_putchar_count(c);
+		ft_putwchar_count(c);
 		if (rules->width && rules->width > rules->len)
 		{
 			rules->len = rules->width - rules->len;
@@ -102,20 +111,6 @@ void		ft_print_c(t_plist *rules, char c)
 				((rules->flags & 16) && !(rules->flags & 2))
 					? ft_putchar_count('0') : ft_putchar_count(' ');
 		}
-		ft_putchar_count(c);
+		ft_putwchar_count(c);
 	}
-}
-
-void		ft_userstring(t_plist *rules, char c, va_list ap)
-{
-	if (c == '%')
-		ft_print_c(rules, '%');
-	else if ((c == 'c' && (rules->length &= 4)) || c == 'C')
-		ft_print_wc(rules, va_arg(ap, wint_t));
-	else if ((c == 's' && (rules->length &= 4)) || c == 'S')
-		ft_print_ws(rules, va_arg(ap, wchar_t*));
-	else if (c == 'c')
-		ft_print_c(rules, va_arg(ap, int));
-	else if (c == 's')
-		ft_print_s(rules, va_arg(ap, char*));
 }

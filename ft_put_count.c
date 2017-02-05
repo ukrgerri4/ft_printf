@@ -6,13 +6,13 @@
 /*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 19:42:44 by ikryvenk          #+#    #+#             */
-/*   Updated: 2017/02/04 19:43:36 by ikryvenk         ###   ########.fr       */
+/*   Updated: 2017/02/05 13:21:57 by ikryvenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putchar_count(char c)
+void	ft_putchar_count(int c)
 {
 	write(1, &c, 1);
 	g_count++;

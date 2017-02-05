@@ -6,12 +6,14 @@
 /*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 20:07:24 by ikryvenk          #+#    #+#             */
-/*   Updated: 2017/02/04 20:32:26 by ikryvenk         ###   ########.fr       */
+/*   Updated: 2017/02/05 19:12:02 by ikryvenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
+# include <stdio.h>
 
 # include <stdarg.h>
 # include <string.h>
@@ -22,6 +24,7 @@
 # include <inttypes.h>
 
 int				g_count;
+int				g_wcount;
 
 typedef	struct	s_plist
 {
@@ -56,8 +59,10 @@ void			ft_usernumb(t_plist *rules, char c, va_list ap);
 /*
 ** write function
 */
-void			ft_putchar_count(char c);
+void			ft_putchar_count(int c);
 void			ft_putstr_count(char *s);
+void			ft_putwchar_count(wint_t c);
+void			ft_putwstr_count(wchar_t *s);
 char			*ft_itoa_base_s(ssize_t value, int base);
 char			*ft_itoa_base_us(size_t value, int base);
 char			*ft_tolower_str(char *s);
@@ -67,6 +72,10 @@ char			*ft_tolower_str(char *s);
 int				ft_atoi(const char *str);
 void			ft_bzero(void *str, size_t n);
 size_t			ft_strlen(const char *str);
+size_t			ft_wstrlen(wchar_t *str);
 void			ft_strdel(char **as);
-
+void			ft_print_s(t_plist *rules, char *s);
+void			ft_print_c(t_plist *rules, char c);
+void			ft_print_wc(t_plist *rules, wint_t c);
+void			ft_print_ws(t_plist *rules, wchar_t *s);
 #endif
