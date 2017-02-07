@@ -49,6 +49,21 @@ static void	ft_use_rules(t_plist *rules, char c, va_list ap)
 		ft_usernumb(rules, c, ap);
 }
 
+static void	ft_non_spec(t_plist *rules, char c, int *i)
+{
+	if (rules->flags & 2)
+	{
+		ft_putchar_count(c);
+		while (--rules->width > 0)
+			ft_putchar_count(' ');
+		(*i)++;
+	}
+	else
+		while (--rules->width > 0)
+			(rules->flags & 16) ? ft_putchar_count('0')
+		: ft_putchar_count(' ');
+}
+
 int			ft_checkparam(t_plist *rules, const char *format,
 		va_list ap, int *i)
 {
@@ -66,9 +81,7 @@ int			ft_checkparam(t_plist *rules, const char *format,
 			ft_write_length(rules, &format[(*i)++], i);
 		else
 		{
-			while (--rules->width > 0)
-				(rules->flags & 16) ? ft_putchar_count('0')
-					: ft_putchar_count(' ');
+			ft_non_spec(rules, format[*i], i);
 			return (1);
 		}
 	}
