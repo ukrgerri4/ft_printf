@@ -6,7 +6,7 @@
 /*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 19:51:53 by ikryvenk          #+#    #+#             */
-/*   Updated: 2017/02/04 20:38:29 by ikryvenk         ###   ########.fr       */
+/*   Updated: 2017/02/07 16:00:32 by ikryvenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ static void	ft_alignment_off(t_plist *rules, char *s, char c, int i)
 void		ft_pnumb(t_plist *rules, char *s, char c)
 {
 	int		i;
-	int		j;
 	char	*string;
 
 	string = s;

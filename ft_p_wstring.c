@@ -6,7 +6,7 @@
 /*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 19:55:14 by ikryvenk          #+#    #+#             */
-/*   Updated: 2017/02/05 19:55:16 by ikryvenk         ###   ########.fr       */
+/*   Updated: 2017/02/07 15:59:01 by ikryvenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,12 @@ void		ft_print_ws(t_plist *rules, wchar_t *s)
 {
 	if (!s)
 	{
-		s = "(null)";
-		ft_print_s(rules, s);
+		ft_print_s(rules, "(null)");
 		return ;
 	}
 	rules->len = ft_wstrlen(s);
+	if (rules->precision > 0)
+		rules->precision = ft_fix_prec(rules->precision, s);
 	if (rules->flags & 2)
 		ft_pws_align_on(rules, s);
 	else

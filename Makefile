@@ -6,7 +6,7 @@
 #    By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:53:26 by ikryvenk          #+#    #+#              #
-#    Updated: 2017/02/05 18:20:52 by ikryvenk         ###   ########.fr        #
+#    Updated: 2017/02/07 15:59:47 by ikryvenk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ $(NAME): $(OBJECTS)
 	ar rc $(NAME) $(OBJECTS)
 
 %.o: ./%.c
-	gcc -o $@ -c $<
+	gcc  $(WWW) -o $@ -c $<
 
 clean:
 	rm -f $(OBJECTS)

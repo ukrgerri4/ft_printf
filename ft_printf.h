@@ -6,14 +6,12 @@
 /*   By: ikryvenk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 20:07:24 by ikryvenk          #+#    #+#             */
-/*   Updated: 2017/02/05 19:12:02 by ikryvenk         ###   ########.fr       */
+/*   Updated: 2017/02/07 15:58:41 by ikryvenk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-
-# include <stdio.h>
 
 # include <stdarg.h>
 # include <string.h>
@@ -56,6 +54,7 @@ void			ft_userstring(t_plist *rules, char c, va_list ap);
 ssize_t			ft_sign_t(t_plist *rules, va_list ap);
 size_t			ft_unsign_t(t_plist *rules, va_list ap);
 void			ft_usernumb(t_plist *rules, char c, va_list ap);
+int				ft_fix_prec(int d, wchar_t *str);
 /*
 ** write function
 */
